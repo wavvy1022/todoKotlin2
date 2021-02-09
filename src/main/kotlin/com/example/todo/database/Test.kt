@@ -9,7 +9,7 @@ class Test {
         //3.String template
         val name = "wavvy"
         println("my name is {$name}I'm 30")
-        println("my name is $name i'm 30")
+        println("my name is {$name} i'm 30")
 
         //4.조건식
         fun max(a:Int, b:Int):Int{
