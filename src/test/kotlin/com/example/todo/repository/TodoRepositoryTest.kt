@@ -33,11 +33,11 @@ class TodoRepositoryTest {
 
         val result = todoRepositoryImpl.save(todo)
 
-        Assertions.assertEquals(1,result.index)
-        Assertions.assertNotNull(result.createAt)
-        Assertions.assertNotNull(result.updateAt)
-        Assertions.assertEquals("테스트 일정", result.title)
-        Assertions.assertEquals("테스트", result.description)
+        Assertions.assertEquals(1,result?.index)
+        Assertions.assertNotNull(result?.createdAt)
+        Assertions.assertNotNull(result?.updatedAt)
+        Assertions.assertEquals("테스트 일정", result?.title)
+        Assertions.assertEquals("테스트", result?.description)
     }
 
     @Test
@@ -49,13 +49,13 @@ class TodoRepositoryTest {
                 this.schedule = LocalDateTime.now()
             },
             Todo().apply {
-                this.title = "테스트 일정"
-                this.description = "테스트"
+                this.title = "테스트 일정2"
+                this.description = "테스트2"
                 this.schedule = LocalDateTime.now()
             },
             Todo().apply {
-                this.title = "테스트 일정"
-                this.description = "테스트"
+                this.title = "테스트 일정3"
+                this.description = "테스트3"
                 this.schedule = LocalDateTime.now()
             },
         )
@@ -86,7 +86,31 @@ class TodoRepositoryTest {
         )
         todoRepositoryImpl.saveAll(todoList)
 
+
         val result = todoRepositoryImpl.findOne(2)
         Assertions.assertEquals("테스트 일정2", result?.title)
+    }
+    @Test
+    fun update(){
+        val todo = Todo().apply {
+            this.title = "테스트 일정"
+            this.description = "테스트"
+            this.schedule = LocalDateTime.now()
+        }
+        todoRepositoryImpl.save(todo)
+
+        val newTodo = Todo().apply {
+            this.index = 1
+            this.title = "업데이트 일정"
+            this.description = "업데이트 테스트"
+            this.schedule = LocalDateTime.now()
+        }
+        val result = todoRepositoryImpl.save(newTodo)
+        Assertions.assertNotNull(result)
+        Assertions.assertEquals(newTodo?.index, result?.index)
+        Assertions.assertEquals("업데이트 일정", result?.title)
+        Assertions.assertEquals("업데이트 테스트", result?.description)
+
+
     }
 }
